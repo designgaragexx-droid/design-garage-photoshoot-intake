@@ -1,0 +1,236 @@
+/* ============================================================
+   DESIGN GARAGE — Colors & Type Foundations
+   LA-based editorial / premium brand design studio
+   Import this file to inherit the studio's visual language.
+   ============================================================ */
+
+/* ---------- FONTS ---------- */
+@font-face {
+  font-family: "Shandy Molly";
+  src: url("fonts/ShandyMolly.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Editors Note";
+  src: url("fonts/EditorsNote-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Editors Note";
+  src: url("fonts/EditorsNote-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cooper Hewitt";
+  src: url("fonts/CooperHewitt-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cooper Hewitt";
+  src: url("fonts/CooperHewitt-SemiboldItalic.otf") format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- CORE PALETTE ---------- */
+  /* The studio works almost exclusively in two tones. */
+  --dg-ink: #2b2b2c;        /* near-black — primary text, marks, dark grounds */
+  --dg-paper: #fcfbf9;      /* warm off-white — primary background "paper" */
+
+  /* Ink tints (built from --dg-ink, for hierarchy on paper) */
+  --dg-ink-90: #3a3a3b;
+  --dg-ink-70: #5c5c5d;
+  --dg-ink-55: #7e7e7f;     /* secondary / captions */
+  --dg-ink-35: #b0afab;     /* tertiary / disabled */
+  --dg-ink-15: #dedcd6;     /* hairline borders on paper */
+  --dg-ink-08: #ecebe5;     /* subtle fills / hover wash */
+
+  /* Paper tints (warm neutrals between paper and ink) */
+  --dg-bone: #f4f2ec;       /* secondary surface, alternating sections */
+  --dg-greige: #e8e5dd;     /* cards / inset panels */
+  --dg-stone: #d8d4ca;      /* dividers on bone */
+
+  /* ---------- ACCENT PALETTE ---------- */
+  /* Accents live mainly IN PHOTOGRAPHY, not in the UI chrome.
+     Use sparingly — a single hairline, a hover, a tiny mark.
+     Never fill large areas with these. */
+  --dg-blue: #0688ae;       /* editorial teal-blue */
+  --dg-orange: #cb4818;     /* burnt orange / terracotta */
+  --dg-green: #1f674d;      /* deep pine green */
+  --dg-chrome: #b9bcc0;     /* silver / chrome — shown via photography */
+  --dg-chrome-hi: #e4e6e8;  /* chrome highlight */
+
+  /* ---------- SEMANTIC FOUNDATIONS ---------- */
+  --dg-fg-1: var(--dg-ink);        /* primary foreground */
+  --dg-fg-2: var(--dg-ink-55);     /* secondary foreground */
+  --dg-fg-3: var(--dg-ink-35);     /* tertiary / muted */
+  --dg-fg-inverse: var(--dg-paper);
+
+  --dg-bg-1: var(--dg-paper);      /* primary background */
+  --dg-bg-2: var(--dg-bone);       /* secondary background */
+  --dg-bg-3: var(--dg-greige);     /* raised / card */
+  --dg-bg-inverse: var(--dg-ink);  /* dark sections */
+
+  --dg-border: var(--dg-ink-15);
+  --dg-border-strong: var(--dg-ink);
+  --dg-divider: var(--dg-stone);
+
+  /* ---------- TYPE FAMILIES ---------- */
+  /* Shandy Molly — logo / display. UPPERCASE ONLY (no lowercase glyphs).
+     Bouncy, hand-cut character. Reserve for the wordmark, huge numerals,
+     and the occasional punchy display moment. Never set body in it. */
+  --dg-font-logo: "Shandy Molly", "Arial Black", sans-serif;
+
+  /* Editor's Note — editorial serif display. The studio's headline voice.
+     Light weight, high-contrast, elegant. Italic for emphasis & brand names. */
+  --dg-font-display: "Editors Note", "Times New Roman", serif;
+
+  /* Cooper Hewitt — geometric humanist sans. Body, UI, labels, nav.
+     Book for running text; Semibold Italic for pull-quotes / accents. */
+  --dg-font-body: "Cooper Hewitt", "Helvetica Neue", Arial, sans-serif;
+
+  /* ---------- TYPE SCALE (px @ desktop) ---------- */
+  --dg-text-hero: clamp(56px, 9vw, 132px);  /* Editor's Note display hero */
+  --dg-text-d1: clamp(44px, 6vw, 88px);
+  --dg-text-d2: clamp(36px, 4.5vw, 64px);
+  --dg-text-h1: 44px;
+  --dg-text-h2: 32px;
+  --dg-text-h3: 24px;
+  --dg-text-lg: 20px;
+  --dg-text-base: 17px;
+  --dg-text-sm: 15px;
+  --dg-text-xs: 13px;
+  --dg-text-eyebrow: 12px;   /* tracked-out label */
+
+  /* ---------- TRACKING ---------- */
+  --dg-track-eyebrow: 0.22em;  /* nav, eyebrows, small caps labels */
+  --dg-track-label: 0.14em;
+  --dg-track-tight: -0.01em;   /* large serif display */
+  --dg-track-body: 0;
+
+  /* ---------- LINE HEIGHT ---------- */
+  --dg-leading-display: 1.02;
+  --dg-leading-tight: 1.12;
+  --dg-leading-snug: 1.3;
+  --dg-leading-body: 1.6;
+
+  /* ---------- SPACING (8px base) ---------- */
+  --dg-space-1: 4px;
+  --dg-space-2: 8px;
+  --dg-space-3: 12px;
+  --dg-space-4: 16px;
+  --dg-space-5: 24px;
+  --dg-space-6: 32px;
+  --dg-space-7: 48px;
+  --dg-space-8: 64px;
+  --dg-space-9: 96px;
+  --dg-space-10: 128px;
+  --dg-gutter: clamp(24px, 5vw, 80px);  /* page margin */
+
+  /* ---------- RADII ---------- */
+  /* The brand is STRICTLY SQUARE. No corner radius, ever — on any element.
+     Sharp 0px corners are core to the editorial character. */
+  --dg-radius-0: 0px;        /* the only radius — sharp editorial corners */
+
+  /* ---------- BORDERS ---------- */
+  --dg-hairline: 1px solid var(--dg-border);
+  --dg-rule: 1px solid var(--dg-ink);
+
+  /* ---------- SHADOWS ---------- */
+  /* Used very sparingly — the aesthetic is flat & matte.
+     Shadows are soft, neutral, low-contrast when present. */
+  --dg-shadow-sm: 0 1px 2px rgba(43, 43, 44, 0.06);
+  --dg-shadow-md: 0 8px 30px rgba(43, 43, 44, 0.08);
+  --dg-shadow-lg: 0 24px 60px rgba(43, 43, 44, 0.12);
+
+  /* ---------- MOTION ---------- */
+  --dg-ease: cubic-bezier(0.22, 1, 0.36, 1);   /* gentle ease-out */
+  --dg-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dg-dur-fast: 180ms;
+  --dg-dur: 360ms;
+  --dg-dur-slow: 720ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Opt-in via .dg-prose or use the utility classes directly.
+   ============================================================ */
+
+.dg-eyebrow {
+  font-family: var(--dg-font-body);
+  font-weight: 600;
+  font-size: var(--dg-text-eyebrow);
+  letter-spacing: var(--dg-track-eyebrow);
+  text-transform: uppercase;
+  color: var(--dg-fg-2);
+}
+
+.dg-hero {
+  font-family: var(--dg-font-display);
+  font-weight: 300;
+  font-size: var(--dg-text-hero);
+  line-height: var(--dg-leading-display);
+  letter-spacing: var(--dg-track-tight);
+  color: var(--dg-fg-1);
+  text-wrap: balance;
+}
+.dg-hero em, .dg-display em, .dg-h1 em { font-style: italic; }
+
+.dg-display {
+  font-family: var(--dg-font-display);
+  font-weight: 300;
+  font-size: var(--dg-text-d1);
+  line-height: var(--dg-leading-tight);
+  letter-spacing: var(--dg-track-tight);
+  color: var(--dg-fg-1);
+  text-wrap: balance;
+}
+
+.dg-h1 { font-family: var(--dg-font-display); font-weight: 300; font-size: var(--dg-text-h1); line-height: var(--dg-leading-tight); color: var(--dg-fg-1); }
+.dg-h2 { font-family: var(--dg-font-display); font-weight: 300; font-size: var(--dg-text-h2); line-height: var(--dg-leading-snug); color: var(--dg-fg-1); }
+.dg-h3 { font-family: var(--dg-font-body); font-weight: 600; font-size: var(--dg-text-h3); line-height: var(--dg-leading-snug); color: var(--dg-fg-1); }
+
+.dg-logotype {
+  font-family: var(--dg-font-logo);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--dg-fg-1);
+}
+
+.dg-body {
+  font-family: var(--dg-font-body);
+  font-weight: 400;
+  font-size: var(--dg-text-base);
+  line-height: var(--dg-leading-body);
+  color: var(--dg-fg-1);
+}
+.dg-body-lg { font-family: var(--dg-font-body); font-weight: 400; font-size: var(--dg-text-lg); line-height: var(--dg-leading-body); color: var(--dg-fg-1); }
+.dg-small { font-family: var(--dg-font-body); font-size: var(--dg-text-sm); line-height: var(--dg-leading-snug); color: var(--dg-fg-2); }
+
+.dg-quote {
+  font-family: var(--dg-font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--dg-text-d2);
+  line-height: var(--dg-leading-tight);
+  color: var(--dg-fg-1);
+}
+
+.dg-nav-link {
+  font-family: var(--dg-font-body);
+  font-weight: 600;
+  font-size: var(--dg-text-xs);
+  letter-spacing: var(--dg-track-eyebrow);
+  text-transform: uppercase;
+  color: var(--dg-fg-1);
+  text-decoration: none;
+}
