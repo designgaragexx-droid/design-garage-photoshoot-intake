@@ -12,10 +12,25 @@
 <helmet data-dc-atomics>
   <link rel="stylesheet" href="colors_and_type.css">
   <style>
+    :root{
+      --bg:#2b2b2c;
+      --fg:#fcfbf9;
+      --muted:rgba(252,251,249,0.62);
+      --faint:rgba(252,251,249,0.40);
+      --line:rgba(252,251,249,0.22);
+      --line-soft:rgba(252,251,249,0.14);
+      --fill:rgba(252,251,249,0.07);
+      --alert:#e79470;
+      --r:15px;
+    }
     *{box-sizing:border-box;}
-    html,body{margin:0;padding:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+    html,body{margin:0;padding:0;background:#2b2b2c;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
     @keyframes dgFadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-    ::selection{background:var(--dg-ink);color:var(--dg-paper);}
+    ::selection{background:#fcfbf9;color:#2b2b2c;}
+    input::placeholder,textarea::placeholder{color:rgba(252,251,249,0.34);}
+    input:focus,textarea:focus{outline:none;border-color:#fcfbf9;}
+    a{color:#fcfbf9;}
+    a:hover{opacity:0.7;}
     @media print { .dg-noprint{display:none !important;} }
     @media (max-width:720px){
       .dg-pkg-row{flex-direction:column !important;}
@@ -24,80 +39,91 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh;width:100%;background:var(--dg-paper);font-family:var(--dg-font-body);color:var(--dg-ink);display:flex;flex-direction:column;">
+<div style="min-height:100vh;width:100%;background:var(--bg);font-family:var(--dg-font-body);color:var(--fg);display:flex;flex-direction:column;">
 
   <div class="dg-noprint" style="padding:22px clamp(20px,5vw,80px) 0;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:16px;">
-      <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);">{{ stepLabel }}</div>
-      <img src="assets/star-mark-dark.png" alt="Design Garage" style="height:15px;width:auto;opacity:0.55;"/>
+      <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);">{{ stepLabel }}</div>
+      <img src="assets/star-mark-white.png" alt="Design Garage" style="height:15px;width:auto;opacity:0.75;"/>
     </div>
-    <div style="height:2px;background:var(--dg-ink-15);width:100%;">
-      <div style="height:2px;background:var(--dg-ink);width:{{ progressPercent }}%;transition:width 0.4s cubic-bezier(0.22,1,0.36,1);"></div>
+    <div style="height:2px;background:var(--line-soft);width:100%;">
+      <div style="height:2px;background:var(--fg);width:{{ progressPercent }}%;transition:width 0.4s cubic-bezier(0.22,1,0.36,1);"></div>
     </div>
   </div>
 
   <div style="flex:1;display:flex;flex-direction:column;padding:clamp(36px,7vw,72px) clamp(20px,5vw,80px) 56px;">
     <div key="{{ step }}" style="width:100%;max-width:{{ contentMaxWidth }}px;margin:0 auto;animation:dgFadeUp 0.5s cubic-bezier(0.22,1,0.36,1);">
 
+      <!-- 00 — COVER -->
+      <sc-if value="{{ stepIs0 }}" hint-placeholder-val="{{ true }}">
+        <div style="text-align:center;display:flex;flex-direction:column;align-items:center;padding-top:clamp(20px,7vw,90px);">
+          <div style="font:600 12px var(--dg-font-body);letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-bottom:34px;">AI Photoshoot</div>
+          <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(40px,7.5vw,86px);line-height:1.06;margin:0 0 40px;max-width:16ch;">Let&rsquo;s Design Your AI Photoshoot</h1>
+          <p style="font-size:clamp(16px,1.6vw,19px);line-height:1.85;color:var(--muted);max-width:60ch;margin:0 0 26px;">Custom AI photography for products, founders, and personal brands. Every shoot begins with creative direction and is built around your brand aesthetic to create realistic, editorial-quality imagery for websites, social media, ads, and campaigns.</p>
+          <p style="font-size:clamp(16px,1.6vw,19px);line-height:1.85;color:var(--muted);max-width:60ch;margin:0 0 48px;">A few quick questions and we&rsquo;ll know exactly what your shoot needs.</p>
+          <button type="button" onClick="{{ goNext }}" style="background:transparent;color:var(--fg);border:1px solid var(--fg);padding:22px 48px;font:600 13px var(--dg-font-body);letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Let&rsquo;s Get Started</button>
+        </div>
+      </sc-if>
+
       <!-- 01 — WHAT ARE WE SHOOTING -->
-      <sc-if value="{{ stepIs1 }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ stepIs1 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">AI Photoshoot Intake</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">AI Photoshoot Intake</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">What are we creating?</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 36px;">Choose the type of shoot you have in mind and we&rsquo;ll ask only what matters for it.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 36px;">Choose the type of shoot you have in mind and we&rsquo;ll ask only what matters for it.</p>
 
           <div class="dg-pkg-row" style="display:flex;gap:20px;align-items:stretch;">
             <sc-for list="{{ shootTypeCards }}" as="t" hint-placeholder-count="3">
-              <label style="flex:1;display:flex;flex-direction:column;gap:14px;padding:28px;cursor:pointer;border:2px solid {{ t.borderColor }};background:{{ t.bg }};transition:border-color 0.3s ease,background 0.3s ease;">
+              <label style="flex:1;display:flex;flex-direction:column;gap:14px;padding:28px;cursor:pointer;border:1px solid {{ t.borderColor }};background:{{ t.bg }};border-radius:var(--r);transition:border-color 0.3s ease,background 0.3s ease;">
                 <input type="radio" name="dg-shoot-type" checked="{{ t.selected }}" onChange="{{ t.select }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="{{ t.name }}"/>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;color:var(--dg-ink-55);">{{ t.eyebrow }}</div>
-                  <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--dg-ink);display:flex;align-items:center;justify-content:center;flex:none;">
-                    <div style="width:10px;height:10px;border-radius:50%;background:var(--dg-ink);opacity:{{ t.dotOpacity }};"></div>
+                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);">{{ t.eyebrow }}</div>
+                  <div style="width:20px;height:20px;border-radius:50%;border:1px solid var(--fg);display:flex;align-items:center;justify-content:center;flex:none;">
+                    <div style="width:10px;height:10px;border-radius:50%;background:var(--fg);opacity:{{ t.dotOpacity }};"></div>
                   </div>
                 </div>
                 <div style="font-family:var(--dg-font-display);font-weight:300;font-size:26px;line-height:1.15;">{{ t.name }}</div>
-                <div style="font-size:15px;line-height:1.6;color:var(--dg-ink-70);">{{ t.desc }}</div>
+                <div style="font-size:15px;line-height:1.6;color:var(--muted);">{{ t.desc }}</div>
               </label>
             </sc-for>
           </div>
-          <sc-if value="{{ errors.shootType }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--dg-orange);margin:16px 0 0;">Please choose one to continue.</p></sc-if>
+          <sc-if value="{{ errors.shootType }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--alert);margin:16px 0 0;">Please choose one to continue.</p></sc-if>
 
           <!-- E-Commerce branch -->
           <sc-if value="{{ isEcom }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:48px;border-top:1px solid var(--dg-ink-15);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
+            <div style="margin-top:48px;border-top:1px solid var(--line-soft);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">How many products / SKUs are we working with?</label>
-                <input type="text" value="{{ skuCount }}" onChange="{{ setSkuCount }}" placeholder="e.g. 4 SKUs" style="width:100%;max-width:320px;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ skuCountBorder }};background:var(--dg-paper);border-radius:0;"/>
-                <sc-if value="{{ errors.skuCount }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">This field is required.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">How many products / SKUs are we working with?</label>
+                <input type="text" value="{{ skuCount }}" onChange="{{ setSkuCount }}" placeholder="e.g. 4 SKUs" style="width:100%;max-width:320px;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid {{ skuCountBorder }};background:transparent;border-radius:var(--r);"/>
+                <sc-if value="{{ errors.skuCount }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">This field is required.</p></sc-if>
               </div>
 
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Tell us about the products</label>
-                <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Include product names, SKUs, variations, flavors, colors &mdash; anything that distinguishes one from another.</p>
-                <textarea value="{{ productDetails }}" onChange="{{ setProductDetails }}" rows="5" placeholder="Tell us about each product&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ productDetailsBorder }};background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
-                <sc-if value="{{ errors.productDetails }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">This field is required.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Tell us about the products</label>
+                <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Include product names, SKUs, variations, flavors, colors &mdash; anything that distinguishes one from another.</p>
+                <textarea value="{{ productDetails }}" onChange="{{ setProductDetails }}" rows="5" placeholder="Tell us about each product&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid {{ productDetailsBorder }};background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
+                <sc-if value="{{ errors.productDetails }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">This field is required.</p></sc-if>
               </div>
 
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Product dimensions</label>
-                <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Height, width, depth, or relative scale &mdash; whatever helps us keep proportions accurate.</p>
-                <textarea value="{{ productDimensions }}" onChange="{{ setProductDimensions }}" rows="3" placeholder="e.g. 6 oz bottle, 5.5&quot; tall x 2&quot; wide&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Product dimensions</label>
+                <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Height, width, depth, or relative scale &mdash; whatever helps us keep proportions accurate.</p>
+                <textarea value="{{ productDimensions }}" onChange="{{ setProductDimensions }}" rows="3" placeholder="e.g. 6 oz bottle, 5.5 in tall x 2 in wide&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
               </div>
 
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Show us the product</label>
-                <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 14px;line-height:1.5;max-width:560px;">Please provide clear reference photos of each product so we can accurately understand the packaging, proportions, colors, labels, and product details.</p>
-                <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--dg-ink-35);cursor:pointer;text-align:center;">
-                  <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-70);">+ Upload reference photos (PNG, JPG, PDF)</span>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Show us the product</label>
+                <p style="font-size:13.5px;color:var(--faint);margin:0 0 14px;line-height:1.5;max-width:560px;">Please provide clear reference photos of each product so we can accurately understand the packaging, proportions, colors, labels, and product details.</p>
+                <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--line);border-radius:var(--r);cursor:pointer;text-align:center;">
+                  <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">+ Upload reference photos (PNG, JPG, PDF)</span>
                   <input type="file" multiple="{{ true }}" accept="image/*,.pdf" onChange="{{ addProductFiles }}" style="position:absolute;opacity:0;width:1px;height:1px;"/>
                 </label>
                 <sc-if value="{{ hasProductFiles }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
                     <sc-for list="{{ productFiles }}" as="f" hint-placeholder-count="2">
-                      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dg-bone);font-size:13.5px;">
+                      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--fill);border-radius:var(--r);font-size:13.5px;">
                         <span>{{ f.name }}</span>
-                        <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--dg-ink-55);font-size:15px;">&times;</button>
+                        <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;">&times;</button>
                       </div>
                     </sc-for>
                   </div>
@@ -105,66 +131,66 @@
               </div>
 
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Link your product files</label>
-                <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;max-width:560px;">A Google Drive folder is preferred. Please include anything you have available:</p>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Link your product files</label>
+                <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;max-width:560px;">A Google Drive folder is preferred. Please include anything you have available:</p>
                 <div style="display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 16px;">
                   <sc-for list="{{ productFileExamples }}" as="ex" hint-placeholder-count="7">
-                    <div style="font-size:13.5px;color:var(--dg-ink-70);display:flex;gap:8px;"><span style="color:var(--dg-ink-35);">&mdash;</span>{{ ex }}</div>
+                    <div style="font-size:13.5px;color:var(--muted);display:flex;gap:8px;"><span style="color:var(--faint);">&mdash;</span>{{ ex }}</div>
                   </sc-for>
                 </div>
-                <input type="url" value="{{ productDriveLink }}" onChange="{{ setProductDriveLink }}" placeholder="https://drive.google.com/&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+                <input type="url" value="{{ productDriveLink }}" onChange="{{ setProductDriveLink }}" placeholder="https://drive.google.com/&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
               </div>
             </div>
           </sc-if>
 
           <!-- Personal brand branch -->
           <sc-if value="{{ isPersonal }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:48px;border-top:1px solid var(--dg-ink-15);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
+            <div style="margin-top:48px;border-top:1px solid var(--line-soft);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:14px;">Are we creating images of a specific person?</label>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Are we creating images of a specific person?</label>
                 <div style="display:flex;flex-direction:column;gap:10px;max-width:420px;">
                   <sc-for list="{{ personOptions }}" as="opt" hint-placeholder-count="2">
-                    <label style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid {{ opt.borderColor }};background:{{ opt.bg }};cursor:pointer;transition:all 0.2s ease;">
+                    <label style="display:flex;align-items:center;gap:12px;padding:14px 18px;border:1px solid {{ opt.borderColor }};background:{{ opt.bg }};border-radius:var(--r);cursor:pointer;transition:all 0.2s ease;">
                       <input type="radio" name="dg-person" checked="{{ opt.selected }}" onChange="{{ opt.select }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="{{ opt.label }}"/>
-                      <span style="flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--dg-ink);display:flex;align-items:center;justify-content:center;">
-                        <span style="width:9px;height:9px;border-radius:50%;background:var(--dg-ink);opacity:{{ opt.dotOpacity }};"></span>
+                      <span style="flex:none;width:18px;height:18px;border-radius:50%;border:1px solid var(--fg);display:flex;align-items:center;justify-content:center;">
+                        <span style="width:9px;height:9px;border-radius:50%;background:var(--fg);opacity:{{ opt.dotOpacity }};"></span>
                       </span>
                       <span style="font-size:15px;">{{ opt.label }}</span>
                     </label>
                   </sc-for>
                 </div>
-                <sc-if value="{{ errors.personSpecific }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:10px 0 0;">Please choose one option.</p></sc-if>
+                <sc-if value="{{ errors.personSpecific }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:10px 0 0;">Please choose one option.</p></sc-if>
               </div>
 
               <sc-if value="{{ personIsYes }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-direction:column;gap:34px;">
                   <div>
-                    <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Show us who we&rsquo;re working with</label>
-                    <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 14px;line-height:1.5;max-width:560px;">Please provide clear reference photos of the person we&rsquo;re recreating. A variety of angles, expressions, close-ups, and full-body images will help us create more consistent results.</p>
-                    <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--dg-ink-35);cursor:pointer;text-align:center;">
-                      <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-70);">+ Upload reference photos</span>
+                    <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Show us who we&rsquo;re working with</label>
+                    <p style="font-size:13.5px;color:var(--faint);margin:0 0 14px;line-height:1.5;max-width:560px;">Please provide clear reference photos of the person we&rsquo;re recreating. A variety of angles, expressions, close-ups, and full-body images will help us create more consistent results.</p>
+                    <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--line);border-radius:var(--r);cursor:pointer;text-align:center;">
+                      <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">+ Upload reference photos</span>
                       <input type="file" multiple="{{ true }}" accept="image/*,.pdf" onChange="{{ addPersonFiles }}" style="position:absolute;opacity:0;width:1px;height:1px;"/>
                     </label>
                     <sc-if value="{{ hasPersonFiles }}" hint-placeholder-val="{{ false }}">
                       <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
                         <sc-for list="{{ personFiles }}" as="f" hint-placeholder-count="2">
-                          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dg-bone);font-size:13.5px;">
+                          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--fill);border-radius:var(--r);font-size:13.5px;">
                             <span>{{ f.name }}</span>
-                            <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--dg-ink-55);font-size:15px;">&times;</button>
+                            <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;">&times;</button>
                           </div>
                         </sc-for>
                       </div>
                     </sc-if>
                     <div style="margin-top:18px;">
-                      <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Or link a Google Drive folder</label>
-                      <input type="url" value="{{ personDriveLink }}" onChange="{{ setPersonDriveLink }}" placeholder="https://drive.google.com/&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+                      <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Or link a Google Drive folder</label>
+                      <input type="url" value="{{ personDriveLink }}" onChange="{{ setPersonDriveLink }}" placeholder="https://drive.google.com/&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
                     </div>
                   </div>
 
                   <div>
-                    <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Are there any details that need to remain consistent?</label>
-                    <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Think hair, facial features, body type, tattoos, wardrobe, accessories.</p>
-                    <textarea value="{{ consistencyDetails }}" onChange="{{ setConsistencyDetails }}" rows="4" placeholder="What must stay accurate&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+                    <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Are there any details that need to remain consistent?</label>
+                    <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Think hair, facial features, body type, tattoos, wardrobe, accessories.</p>
+                    <textarea value="{{ consistencyDetails }}" onChange="{{ setConsistencyDetails }}" rows="4" placeholder="What must stay accurate&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
                   </div>
                 </div>
               </sc-if>
@@ -173,38 +199,39 @@
 
           <!-- Other branch -->
           <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:48px;border-top:1px solid var(--dg-ink-15);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
+            <div style="margin-top:48px;border-top:1px solid var(--line-soft);padding-top:40px;display:flex;flex-direction:column;gap:34px;">
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Tell us what you have in mind</label>
-                <textarea value="{{ otherVision }}" onChange="{{ setOtherVision }}" rows="7" placeholder="Describe the images you&rsquo;re imagining&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ otherVisionBorder }};background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
-                <sc-if value="{{ errors.otherVision }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">This field is required.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Tell us what you have in mind</label>
+                <textarea value="{{ otherVision }}" onChange="{{ setOtherVision }}" rows="7" placeholder="Describe the images you&rsquo;re imagining&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid {{ otherVisionBorder }};background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
+                <sc-if value="{{ errors.otherVision }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">This field is required.</p></sc-if>
               </div>
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Reference images</label>
-                <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--dg-ink-35);cursor:pointer;text-align:center;">
-                  <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-70);">+ Upload reference images</span>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Reference images</label>
+                <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--line);border-radius:var(--r);cursor:pointer;text-align:center;">
+                  <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">+ Upload reference images</span>
                   <input type="file" multiple="{{ true }}" accept="image/*,.pdf" onChange="{{ addOtherFiles }}" style="position:absolute;opacity:0;width:1px;height:1px;"/>
                 </label>
                 <sc-if value="{{ hasOtherFiles }}" hint-placeholder-val="{{ false }}">
                   <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
                     <sc-for list="{{ otherFiles }}" as="f" hint-placeholder-count="2">
-                      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dg-bone);font-size:13.5px;">
+                      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--fill);border-radius:var(--r);font-size:13.5px;">
                         <span>{{ f.name }}</span>
-                        <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--dg-ink-55);font-size:15px;">&times;</button>
+                        <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;">&times;</button>
                       </div>
                     </sc-for>
                   </div>
                 </sc-if>
               </div>
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Reference link</label>
-                <input type="url" value="{{ otherDriveLink }}" onChange="{{ setOtherDriveLink }}" placeholder="Google Drive, Dropbox, or any reference link" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Reference link</label>
+                <input type="url" value="{{ otherDriveLink }}" onChange="{{ setOtherDriveLink }}" placeholder="Google Drive, Dropbox, or any reference link" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
               </div>
             </div>
           </sc-if>
 
-          <div class="dg-noprint" style="display:flex;align-items:center;justify-content:flex-end;margin-top:44px;">
-            <button type="button" onClick="{{ goNext }}" style="background:{{ step1ContinueBg }};color:{{ step1ContinueFg }};border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;">Continue</button>
+          <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:{{ step1ContinueFg }};border:1px solid {{ step1ContinueBorder }};padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Continue</button>
           </div>
         </div>
       </sc-if>
@@ -212,37 +239,37 @@
       <!-- 02 — GOAL -->
       <sc-if value="{{ stepIs2 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">The Goal</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">The Goal</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">What are these images for?</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 32px;">Select everything that applies.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 32px;">Select everything that applies.</p>
 
           <div class="dg-opt-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
             <sc-for list="{{ goalOptions }}" as="g" hint-placeholder-count="9">
-              <label style="display:flex;align-items:center;gap:12px;padding:16px 18px;border:1px solid {{ g.borderColor }};background:{{ g.bg }};cursor:pointer;transition:all 0.2s ease;">
+              <label style="display:flex;align-items:center;gap:12px;padding:16px 18px;border:1px solid {{ g.borderColor }};background:{{ g.bg }};border-radius:var(--r);cursor:pointer;transition:all 0.2s ease;">
                 <input type="checkbox" checked="{{ g.selected }}" onChange="{{ g.toggle }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="{{ g.label }}"/>
-                <span style="flex:none;width:18px;height:18px;border:1.5px solid var(--dg-ink);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--dg-paper);background:{{ g.checkBg }};">{{ g.checkGlyph }}</span>
+                <span style="flex:none;width:18px;height:18px;border:1px solid var(--fg);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;color:{{ g.checkFg }};background:{{ g.checkBg }};">{{ g.checkGlyph }}</span>
                 <span style="font-size:14.5px;line-height:1.4;">{{ g.label }}</span>
               </label>
             </sc-for>
           </div>
-          <sc-if value="{{ errors.goals }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--dg-orange);margin:16px 0 0;">Please select at least one.</p></sc-if>
+          <sc-if value="{{ errors.goals }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--alert);margin:16px 0 0;">Please select at least one.</p></sc-if>
 
           <sc-if value="{{ goalOtherSelected }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:24px;">
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Tell us more</label>
-              <input type="text" value="{{ goalOther }}" onChange="{{ setGoalOther }}" placeholder="What else are these images for?" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Tell us more</label>
+              <input type="text" value="{{ goalOther }}" onChange="{{ setGoalOther }}" placeholder="What else are these images for?" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
             </div>
           </sc-if>
 
-          <div style="margin-top:38px;border-top:1px solid var(--dg-ink-15);padding-top:34px;">
-            <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Is there a specific campaign, launch, product, or message these images need to support?</label>
-            <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Optional.</p>
-            <textarea value="{{ campaignNotes }}" onChange="{{ setCampaignNotes }}" rows="4" placeholder="Tell us what these images need to carry&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+          <div style="margin-top:38px;border-top:1px solid var(--line-soft);padding-top:34px;">
+            <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Is there a specific campaign, launch, product, or message these images need to support?</label>
+            <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Optional.</p>
+            <textarea value="{{ campaignNotes }}" onChange="{{ setCampaignNotes }}" rows="4" placeholder="Tell us what these images need to carry&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
           </div>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
-            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
-            <button type="button" onClick="{{ goNext }}" style="background:var(--dg-ink);color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;" style-hover="background:transparent;color:var(--dg-ink);">Choose My Shoot Size</button>
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:var(--fg);border:1px solid var(--fg);padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Choose My Shoot Size</button>
           </div>
         </div>
       </sc-if>
@@ -250,38 +277,38 @@
       <!-- 03 — PACKAGE -->
       <sc-if value="{{ stepIs3 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Choose Your Shoot Size</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Choose Your Shoot Size</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">How many final images do you need?</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 36px;">Every image is fully art-directed, reviewed, and delivered retouched and ready to use.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 36px;">Every image is fully art-directed, reviewed, and delivered retouched and ready to use.</p>
 
           <div class="dg-pkg-row" style="display:flex;gap:20px;align-items:stretch;">
             <sc-for list="{{ packageCards }}" as="p" hint-placeholder-count="3">
-              <label style="flex:1;display:flex;flex-direction:column;gap:16px;padding:30px;cursor:pointer;border:2px solid {{ p.borderColor }};background:{{ p.bg }};transition:border-color 0.3s ease,background 0.3s ease;">
+              <label style="flex:1;display:flex;flex-direction:column;gap:16px;padding:30px;cursor:pointer;border:1px solid {{ p.borderColor }};background:{{ p.bg }};border-radius:var(--r);transition:border-color 0.3s ease,background 0.3s ease;">
                 <input type="radio" name="dg-package" checked="{{ p.selected }}" onChange="{{ p.select }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="{{ p.name }}"/>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;color:var(--dg-ink-55);">{{ p.name }}</div>
-                  <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--dg-ink);display:flex;align-items:center;justify-content:center;flex:none;">
-                    <div style="width:10px;height:10px;border-radius:50%;background:var(--dg-ink);opacity:{{ p.dotOpacity }};"></div>
+                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);">{{ p.name }}</div>
+                  <div style="width:20px;height:20px;border-radius:50%;border:1px solid var(--fg);display:flex;align-items:center;justify-content:center;flex:none;">
+                    <div style="width:10px;height:10px;border-radius:50%;background:var(--fg);opacity:{{ p.dotOpacity }};"></div>
                   </div>
                 </div>
                 <sc-if value="{{ p.recommended }}" hint-placeholder-val="{{ false }}">
-                  <div style="align-self:flex-start;border:1px solid var(--dg-ink);padding:5px 10px;font:600 10px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;">Recommended</div>
+                  <div style="align-self:flex-start;border:1px solid var(--fg);border-radius:999px;padding:5px 12px;font:600 10px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;">Recommended</div>
                 </sc-if>
                 <div style="font-family:var(--dg-font-display);font-weight:300;font-size:34px;line-height:1.1;">{{ p.countLabel }}</div>
-                <div style="font-size:15px;line-height:1.6;color:var(--dg-ink-70);flex:1;">{{ p.desc }}</div>
-                <div style="border-top:1px solid var(--dg-ink-15);"></div>
-                <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);">Investment</div>
-                <div style="font-family:var(--dg-font-display);font-weight:300;font-size:22px;">{{ p.price }}</div>
-                <div style="margin-top:6px;text-align:center;padding:14px;border:1px solid {{ p.borderColor }};font:600 12px var(--dg-font-body);letter-spacing:0.12em;text-transform:uppercase;background:{{ p.selectBg }};color:{{ p.selectFg }};transition:all 0.25s ease;">{{ p.buttonLabel }}</div>
+                <div style="font-size:15px;line-height:1.6;color:var(--muted);flex:1;">{{ p.desc }}</div>
+                <div style="border-top:1px solid var(--line-soft);"></div>
+                <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">Investment</div>
+                <div style="font-family:var(--dg-font-display);font-weight:300;font-size:26px;">{{ p.price }}</div>
+                <div style="margin-top:6px;text-align:center;padding:14px;border:1px solid var(--fg);border-radius:var(--r);font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;background:{{ p.selectBg }};color:{{ p.selectFg }};transition:all 0.25s ease;">{{ p.buttonLabel }}</div>
               </label>
             </sc-for>
           </div>
 
-          <sc-if value="{{ errors.pkg }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--dg-orange);margin:16px 0 0;">Please select a package to continue.</p></sc-if>
+          <sc-if value="{{ errors.pkg }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--alert);margin:16px 0 0;">Please select a package to continue.</p></sc-if>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
-            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
-            <button type="button" onClick="{{ goNext }}" style="background:{{ step3ContinueBg }};color:{{ step3ContinueFg }};border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;">Continue</button>
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:{{ step3ContinueFg }};border:1px solid {{ step3ContinueBorder }};padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Continue</button>
           </div>
         </div>
       </sc-if>
@@ -289,29 +316,29 @@
       <!-- 04 — CREATIVE DIRECTION -->
       <sc-if value="{{ stepIs4 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Creative Direction</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Creative Direction</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">What&rsquo;s the vibe?</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 32px;">How do you want the final images to feel? Select as many as you like.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 32px;">How do you want the final images to feel? Select as many as you like.</p>
 
           <div style="display:flex;flex-wrap:wrap;gap:10px;">
             <sc-for list="{{ vibeOptions }}" as="v" hint-placeholder-count="15">
-              <label style="display:inline-flex;align-items:center;padding:12px 20px;border:1px solid {{ v.borderColor }};background:{{ v.bg }};color:{{ v.fg }};cursor:pointer;transition:all 0.2s ease;">
+              <label style="display:inline-flex;align-items:center;padding:12px 22px;border:1px solid {{ v.borderColor }};background:{{ v.bg }};color:{{ v.fg }};border-radius:999px;cursor:pointer;transition:all 0.2s ease;">
                 <input type="checkbox" checked="{{ v.selected }}" onChange="{{ v.toggle }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="{{ v.label }}"/>
                 <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;">{{ v.label }}</span>
               </label>
             </sc-for>
           </div>
-          <sc-if value="{{ errors.vibes }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--dg-orange);margin:16px 0 0;">Please select at least one.</p></sc-if>
+          <sc-if value="{{ errors.vibes }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:var(--alert);margin:16px 0 0;">Please select at least one.</p></sc-if>
 
-          <div style="margin-top:40px;border-top:1px solid var(--dg-ink-15);padding-top:34px;">
-            <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Describe the visual direction in your own words</label>
-            <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;max-width:560px;">Optional &mdash; think about lighting, colors, environments, styling, props, composition, and overall energy.</p>
-            <textarea value="{{ visualDirection }}" onChange="{{ setVisualDirection }}" rows="6" placeholder="Describe how these images should look and feel&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+          <div style="margin-top:40px;border-top:1px solid var(--line-soft);padding-top:34px;">
+            <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Describe the visual direction in your own words</label>
+            <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;max-width:560px;">Optional &mdash; think about lighting, colors, environments, styling, props, composition, and overall energy.</p>
+            <textarea value="{{ visualDirection }}" onChange="{{ setVisualDirection }}" rows="6" placeholder="Describe how these images should look and feel&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
           </div>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
-            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
-            <button type="button" onClick="{{ goNext }}" style="background:var(--dg-ink);color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;" style-hover="background:transparent;color:var(--dg-ink);">Continue</button>
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:var(--fg);border:1px solid var(--fg);padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Continue</button>
           </div>
         </div>
       </sc-if>
@@ -319,29 +346,29 @@
       <!-- 05 — INSPIRATION -->
       <sc-if value="{{ stepIs5 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Inspiration</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Inspiration</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">Show us what you&rsquo;re envisioning.</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 36px;">References tell us more in thirty seconds than a page of notes.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 36px;">References tell us more in thirty seconds than a page of notes.</p>
 
           <div style="display:flex;flex-direction:column;gap:34px;">
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Link your moodboard</label>
-              <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Pinterest, Milanote, Canva, Google Drive, Are.na &mdash; whatever you already use.</p>
-              <input type="url" value="{{ moodboardLink }}" onChange="{{ setMoodboardLink }}" placeholder="https://&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Link your moodboard</label>
+              <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Pinterest, Milanote, Canva, Google Drive, Are.na &mdash; whatever you already use.</p>
+              <input type="url" value="{{ moodboardLink }}" onChange="{{ setMoodboardLink }}" placeholder="https://&hellip;" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
             </div>
 
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Upload inspiration images</label>
-              <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--dg-ink-35);cursor:pointer;text-align:center;">
-                <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-70);">+ Upload inspiration (PNG, JPG, PDF)</span>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Upload inspiration images</label>
+              <label style="display:flex;align-items:center;justify-content:center;padding:28px;border:1px dashed var(--line);border-radius:var(--r);cursor:pointer;text-align:center;">
+                <span style="font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);">+ Upload inspiration (PNG, JPG, PDF)</span>
                 <input type="file" multiple="{{ true }}" accept="image/*,.pdf" onChange="{{ addInspoFiles }}" style="position:absolute;opacity:0;width:1px;height:1px;"/>
               </label>
               <sc-if value="{{ hasInspoFiles }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
                   <sc-for list="{{ inspoFiles }}" as="f" hint-placeholder-count="2">
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dg-bone);font-size:13.5px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--fill);border-radius:var(--r);font-size:13.5px;">
                       <span>{{ f.name }}</span>
-                      <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--dg-ink-55);font-size:15px;">&times;</button>
+                      <button type="button" onClick="{{ f.remove }}" aria-label="Remove file" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;">&times;</button>
                     </div>
                   </sc-for>
                 </div>
@@ -349,15 +376,15 @@
             </div>
 
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Any specific brands, campaigns, photographers, or images you want us to pull from?</label>
-              <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;">Optional.</p>
-              <textarea value="{{ inspoRefs }}" onChange="{{ setInspoRefs }}" rows="4" placeholder="Name names &mdash; we&rsquo;ll look them up&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Any specific brands, campaigns, photographers, or images you want us to pull from?</label>
+              <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;">Optional.</p>
+              <textarea value="{{ inspoRefs }}" onChange="{{ setInspoRefs }}" rows="4" placeholder="Name names &mdash; we&rsquo;ll look them up&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
             </div>
           </div>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
-            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
-            <button type="button" onClick="{{ goNext }}" style="background:var(--dg-ink);color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;" style-hover="background:transparent;color:var(--dg-ink);">Continue</button>
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:var(--fg);border:1px solid var(--fg);padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Continue</button>
           </div>
         </div>
       </sc-if>
@@ -365,29 +392,29 @@
       <!-- 06 — FINAL DETAILS -->
       <sc-if value="{{ stepIs6 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Final Details</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Final Details</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 14px;">Anything else we should know?</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 36px;">All optional &mdash; but the more we know now, the fewer revisions later.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 36px;">All optional &mdash; but the more we know now, the fewer revisions later.</p>
 
           <div style="display:flex;flex-direction:column;gap:34px;">
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">What should we absolutely avoid?</label>
-              <textarea value="{{ avoid }}" onChange="{{ setAvoid }}" rows="4" placeholder="Colors, settings, styling, poses, props&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">What should we absolutely avoid?</label>
+              <textarea value="{{ avoid }}" onChange="{{ setAvoid }}" rows="4" placeholder="Colors, settings, styling, poses, props&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
             </div>
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Are there any non-negotiable details that must remain accurate?</label>
-              <p style="font-size:13.5px;color:var(--dg-ink-55);margin:0 0 12px;line-height:1.5;max-width:560px;">{{ nonNegotiableHint }}</p>
-              <textarea value="{{ nonNegotiables }}" onChange="{{ setNonNegotiables }}" rows="4" placeholder="What has to be exactly right&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Are there any non-negotiable details that must remain accurate?</label>
+              <p style="font-size:13.5px;color:var(--faint);margin:0 0 12px;line-height:1.5;max-width:560px;">{{ nonNegotiableHint }}</p>
+              <textarea value="{{ nonNegotiables }}" onChange="{{ setNonNegotiables }}" rows="4" placeholder="What has to be exactly right&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
             </div>
             <div>
-              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Anything else that would be helpful for us to know?</label>
-              <textarea value="{{ additionalNotes }}" onChange="{{ setAdditionalNotes }}" rows="4" placeholder="Deadlines, context, questions&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;resize:vertical;"></textarea>
+              <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Anything else that would be helpful for us to know?</label>
+              <textarea value="{{ additionalNotes }}" onChange="{{ setAdditionalNotes }}" rows="4" placeholder="Deadlines, context, questions&hellip;" style="width:100%;padding:16px;font:16px/1.6 var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);resize:vertical;"></textarea>
             </div>
           </div>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;">
-            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
-            <button type="button" onClick="{{ goNext }}" style="background:var(--dg-ink);color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;" style-hover="background:transparent;color:var(--dg-ink);">Review My Photoshoot</button>
+            <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 4px;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">&larr; Back</button>
+            <button type="button" onClick="{{ goNext }}" style="background:transparent;color:var(--fg);border:1px solid var(--fg);padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Review My Photoshoot</button>
           </div>
         </div>
       </sc-if>
@@ -395,64 +422,64 @@
       <!-- 07 — SUMMARY -->
       <sc-if value="{{ stepIs7 }}" hint-placeholder-val="{{ false }}">
         <div>
-          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Almost There</div>
+          <div style="font:600 11px var(--dg-font-body);letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Almost There</div>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 12px;">Your Photoshoot</h1>
-          <p style="font-size:16px;line-height:1.65;color:var(--dg-ink-70);max-width:600px;margin:0 0 32px;">Take one last look before sending your project our way.</p>
+          <p style="font-size:16px;line-height:1.65;color:var(--muted);max-width:600px;margin:0 0 32px;">Take one last look before sending your project our way.</p>
 
           <div style="margin-bottom:32px;">
-            <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:16px;">Where should we follow up?</div>
+            <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Where should we follow up?</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;">
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Name</label>
-                <input type="text" value="{{ contactName }}" onChange="{{ setContactName }}" placeholder="Jane Doe" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ contactNameBorder }};background:var(--dg-paper);border-radius:0;"/>
-                <sc-if value="{{ errors.contactName }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">This field is required.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Name</label>
+                <input type="text" value="{{ contactName }}" onChange="{{ setContactName }}" placeholder="Jane Doe" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid {{ contactNameBorder }};background:transparent;border-radius:var(--r);"/>
+                <sc-if value="{{ errors.contactName }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">This field is required.</p></sc-if>
               </div>
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Company / Brand</label>
-                <input type="text" value="{{ company }}" onChange="{{ setCompany }}" placeholder="Your brand" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ companyBorder }};background:var(--dg-paper);border-radius:0;"/>
-                <sc-if value="{{ errors.company }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">This field is required.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Company / Brand</label>
+                <input type="text" value="{{ company }}" onChange="{{ setCompany }}" placeholder="Your brand" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid {{ companyBorder }};background:transparent;border-radius:var(--r);"/>
+                <sc-if value="{{ errors.company }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">This field is required.</p></sc-if>
               </div>
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Email</label>
-                <input type="email" value="{{ contactEmail }}" onChange="{{ setContactEmail }}" placeholder="you@brand.com" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid {{ contactEmailBorder }};background:var(--dg-paper);border-radius:0;"/>
-                <sc-if value="{{ errors.contactEmail }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:8px 0 0;">Please enter a valid email.</p></sc-if>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Email</label>
+                <input type="email" value="{{ contactEmail }}" onChange="{{ setContactEmail }}" placeholder="you@brand.com" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid {{ contactEmailBorder }};background:transparent;border-radius:var(--r);"/>
+                <sc-if value="{{ errors.contactEmail }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:8px 0 0;">Please enter a valid email.</p></sc-if>
               </div>
               <div>
-                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:10px;">Website / Instagram &mdash; optional</label>
-                <input type="text" value="{{ socialLink }}" onChange="{{ setSocialLink }}" placeholder="@yourbrand" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--dg-ink);border:1px solid var(--dg-ink-15);background:var(--dg-paper);border-radius:0;"/>
+                <label style="display:block;font:600 12px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Website / Instagram &mdash; optional</label>
+                <input type="text" value="{{ socialLink }}" onChange="{{ setSocialLink }}" placeholder="@yourbrand" style="width:100%;padding:14px 16px;font:16px var(--dg-font-body);color:var(--fg);border:1px solid var(--line);background:transparent;border-radius:var(--r);"/>
               </div>
             </div>
           </div>
 
-          <div style="border:1px solid var(--dg-ink-15);background:var(--dg-bone);padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;">
+          <div style="border:1px solid var(--line);border-radius:var(--r);background:var(--fill);padding:clamp(20px,4vw,36px);display:flex;flex-direction:column;">
             <sc-for list="{{ summaryRows }}" as="r" hint-placeholder-count="10">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid var(--dg-ink-15);">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:22px 0;border-bottom:1px solid var(--line-soft);">
                 <div>
-                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--dg-ink-55);margin-bottom:8px;">{{ r.label }}</div>
+                  <div style="font:600 11px var(--dg-font-body);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">{{ r.label }}</div>
                   <div style="font-size:15px;line-height:1.65;max-width:520px;white-space:pre-line;">{{ r.value }}</div>
                 </div>
-                <button type="button" class="dg-noprint" onClick="{{ r.edit }}" style="background:none;border:none;cursor:pointer;font:600 12px var(--dg-font-body);letter-spacing:0.08em;text-transform:uppercase;color:var(--dg-ink);text-decoration:underline;text-underline-offset:3px;flex:none;">Edit</button>
+                <button type="button" class="dg-noprint" onClick="{{ r.edit }}" style="background:none;border:none;cursor:pointer;font:600 12px var(--dg-font-body);letter-spacing:0.08em;text-transform:uppercase;color:var(--fg);text-decoration:underline;text-underline-offset:3px;flex:none;">Edit</button>
               </div>
             </sc-for>
           </div>
 
           <label style="display:flex;align-items:flex-start;gap:14px;margin-top:28px;cursor:pointer;">
             <input type="checkbox" checked="{{ confirmed }}" onChange="{{ toggleConfirmed }}" style="position:absolute;opacity:0;width:1px;height:1px;" aria-label="I confirm the information above is accurate"/>
-            <span style="flex:none;width:20px;height:20px;border:1.5px solid {{ confirmBorder }};display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--dg-paper);background:{{ confirmBg }};margin-top:2px;">{{ confirmGlyph }}</span>
+            <span style="flex:none;width:20px;height:20px;border:1px solid {{ confirmBorder }};border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;color:{{ confirmFg }};background:{{ confirmBg }};margin-top:2px;">{{ confirmGlyph }}</span>
             <span style="font-size:15px;line-height:1.6;max-width:560px;">I confirm that the information above accurately represents the direction for my project.</span>
           </label>
-          <sc-if value="{{ errors.confirmed }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--dg-orange);margin:10px 0 0;">Please confirm before submitting.</p></sc-if>
+          <sc-if value="{{ errors.confirmed }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:var(--alert);margin:10px 0 0;">Please confirm before submitting.</p></sc-if>
 
           <sc-if value="{{ submitError }}" hint-placeholder-val="{{ false }}">
-            <p style="font-size:14.5px;color:var(--dg-orange);margin:18px 0 0;">Your request wasn&rsquo;t submitted. Please try again &mdash; you won&rsquo;t lose any of your answers.</p>
+            <p style="font-size:14.5px;color:var(--alert);margin:18px 0 0;">Your request wasn&rsquo;t submitted. Please try again &mdash; you won&rsquo;t lose any of your answers.</p>
           </sc-if>
 
           <div class="dg-noprint" style="display:flex;align-items:center;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:16px;">
             <div style="display:flex;gap:24px;align-items:center;">
-              <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--dg-ink-70);border:none;padding:14px 0;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">Go Back</button>
-              <button type="button" onClick="{{ printPage }}" style="background:transparent;color:var(--dg-ink-55);border:none;padding:14px 0;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px;">Print Summary</button>
+              <button type="button" onClick="{{ goBack }}" style="background:transparent;color:var(--muted);border:none;padding:14px 0;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;">Go Back</button>
+              <button type="button" onClick="{{ printPage }}" style="background:transparent;color:var(--faint);border:none;padding:14px 0;font:600 12px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px;">Print Summary</button>
             </div>
-            <button type="button" onClick="{{ submitPlan }}" disabled="{{ isSubmitting }}" style="background:{{ submitBg }};color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:0;min-width:260px;">{{ submitLabel }}</button>
+            <button type="button" onClick="{{ submitPlan }}" disabled="{{ isSubmitting }}" style="background:transparent;color:{{ submitFg }};border:1px solid {{ submitFg }};padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;border-radius:var(--r);min-width:260px;transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">{{ submitLabel }}</button>
           </div>
         </div>
       </sc-if>
@@ -460,13 +487,13 @@
       <!-- CONFIRMATION -->
       <sc-if value="{{ stepIs8 }}" hint-placeholder-val="{{ false }}">
         <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px;padding-top:clamp(8px,4vw,40px);">
-          <img src="assets/star-mark-dark.png" alt="" style="height:26px;width:auto;"/>
+          <img src="assets/star-mark-white.png" alt="" style="height:26px;width:auto;"/>
           <h1 style="font-family:var(--dg-font-display);font-weight:300;font-size:clamp(36px,6vw,60px);line-height:1.08;margin:0;">Request Received</h1>
-          <div style="font-size:18px;line-height:1.7;color:var(--dg-ink-70);display:flex;flex-direction:column;gap:16px;max-width:560px;">
+          <div style="font-size:18px;line-height:1.7;color:var(--muted);display:flex;flex-direction:column;gap:16px;max-width:560px;">
             <p style="margin:0;">Your photoshoot brief is officially in.</p>
             <p style="margin:0;">We&rsquo;ll review your project, references, and creative direction and follow up with next steps.</p>
           </div>
-          <a href="https://design-garage-xx.com/" style="margin-top:12px;background:var(--dg-ink);color:var(--dg-paper);border:1px solid var(--dg-ink);padding:17px 40px;font:600 13px var(--dg-font-body);letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;display:inline-block;" style-hover="background:transparent;color:var(--dg-ink);">Return to Design Garage</a>
+          <a href="https://design-garage-xx.com/" style="margin-top:12px;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:18px 44px;font:600 13px var(--dg-font-body);letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;display:inline-block;border-radius:var(--r);transition:all 0.3s cubic-bezier(0.22,1,0.36,1);" style-hover="background:var(--fg);color:var(--bg);">Return to Design Garage</a>
         </div>
       </sc-if>
 
@@ -518,28 +545,22 @@ const DG_CONFIG = {
 };
 
 const DASH = "\u2014";
+const FG = "var(--fg)";
+const LINE = "var(--line)";
+const TOTAL_SCREENS = 8; // cover + 7 question steps
 
 class Component extends DCLogic {
   state = {
-    step: 1,
+    step: 0,
     shootType: null,
-    // ecommerce
     skuCount: "", productDetails: "", productDimensions: "", productDriveLink: "", productFiles: [],
-    // personal
     personSpecific: null, personDriveLink: "", personFiles: [], consistencyDetails: "",
-    // other
     otherVision: "", otherDriveLink: "", otherFiles: [],
-    // goals
     goals: {}, goalOther: "", campaignNotes: "",
-    // package
     pkg: null,
-    // creative direction
     vibes: {}, visualDirection: "",
-    // inspiration
     moodboardLink: "", inspoFiles: [], inspoRefs: "",
-    // final details
     avoid: "", nonNegotiables: "", additionalNotes: "",
-    // contact
     contactName: "", company: "", contactEmail: "", socialLink: "", confirmed: false,
     errors: {},
     submitStatus: "idle"
@@ -555,7 +576,7 @@ class Component extends DCLogic {
   };
 
   goBack = () => {
-    this.setState((s) => ({ step: Math.max(1, s.step - 1), errors: {} }));
+    this.setState((s) => ({ step: Math.max(0, s.step - 1), errors: {} }));
     this.scrollTop();
   };
 
@@ -753,17 +774,15 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     const step = s.step;
-    const active = "var(--dg-ink)";
-    const idle = "var(--dg-ink-15)";
-    const widths = { 1: 900, 3: 980, 4: 820, 7: 820 };
+    const widths = { 0: 980, 1: 900, 3: 1020, 4: 820, 7: 820 };
 
     const shootTypeCards = DG_CONFIG.shootTypes.map((t) => {
       const selected = s.shootType === t.id;
       return {
         ...t, selected,
         select: this.selectShootType(t.id),
-        borderColor: selected ? active : idle,
-        bg: selected ? "var(--dg-bone)" : "var(--dg-paper)",
+        borderColor: selected ? FG : LINE,
+        bg: selected ? "var(--fill)" : "transparent",
         dotOpacity: selected ? 1 : 0
       };
     });
@@ -773,9 +792,10 @@ class Component extends DCLogic {
       return {
         label: g, selected,
         toggle: this.toggleIn("goals", g),
-        borderColor: selected ? active : idle,
-        bg: selected ? "var(--dg-bone)" : "var(--dg-paper)",
-        checkBg: selected ? "var(--dg-ink)" : "var(--dg-paper)",
+        borderColor: selected ? FG : LINE,
+        bg: selected ? "var(--fill)" : "transparent",
+        checkBg: selected ? "var(--fg)" : "transparent",
+        checkFg: selected ? "var(--bg)" : "transparent",
         checkGlyph: selected ? "\u2713" : ""
       };
     });
@@ -790,11 +810,11 @@ class Component extends DCLogic {
         countLabel: p.count + " Final Images",
         selected,
         select: this.selectPackage(p.id),
-        borderColor: selected ? active : idle,
-        bg: selected ? "var(--dg-bone)" : "var(--dg-paper)",
+        borderColor: selected ? FG : LINE,
+        bg: selected ? "var(--fill)" : "transparent",
         dotOpacity: selected ? 1 : 0,
-        selectBg: selected ? "var(--dg-ink)" : "transparent",
-        selectFg: selected ? "var(--dg-paper)" : "var(--dg-ink)",
+        selectBg: selected ? "var(--fg)" : "transparent",
+        selectFg: selected ? "var(--bg)" : "var(--fg)",
         buttonLabel: selected ? "Selected" : "Select " + p.name
       };
     });
@@ -804,9 +824,9 @@ class Component extends DCLogic {
       return {
         label: v, selected,
         toggle: this.toggleIn("vibes", v),
-        borderColor: selected ? active : "var(--dg-ink-35)",
-        bg: selected ? "var(--dg-ink)" : "transparent",
-        fg: selected ? "var(--dg-paper)" : "var(--dg-ink)"
+        borderColor: FG,
+        bg: selected ? "var(--fg)" : "transparent",
+        fg: selected ? "var(--bg)" : "var(--fg)"
       };
     });
 
@@ -818,8 +838,8 @@ class Component extends DCLogic {
       return {
         label: o.label, selected,
         select: this.selectPerson(o.id),
-        borderColor: selected ? active : idle,
-        bg: selected ? "var(--dg-bone)" : "var(--dg-paper)",
+        borderColor: selected ? FG : LINE,
+        bg: selected ? "var(--fill)" : "transparent",
         dotOpacity: selected ? 1 : 0
       };
     });
@@ -846,25 +866,25 @@ class Component extends DCLogic {
 
     return {
       step,
-      stepLabel: step >= 8 ? "Complete" : "Step " + step + " of 7",
-      progressPercent: Math.min(100, (step / 7) * 100),
+      stepLabel: step >= TOTAL_SCREENS ? "Complete" : "Step " + (step + 1) + " of " + TOTAL_SCREENS,
+      progressPercent: Math.min(100, ((step + 1) / TOTAL_SCREENS) * 100),
       contentMaxWidth: widths[step] || 700,
 
+      stepIs0: step === 0,
       stepIs1: step === 1, stepIs2: step === 2, stepIs3: step === 3, stepIs4: step === 4,
       stepIs5: step === 5, stepIs6: step === 6, stepIs7: step === 7, stepIs8: step === 8,
 
       goNext: this.goNext, goBack: this.goBack, printPage: this.printPage,
       errors: s.errors,
 
-      // step 1
       shootTypeCards,
       isEcom: s.shootType === "ecommerce",
       isPersonal: s.shootType === "personal",
       isOther: s.shootType === "other",
       skuCount: s.skuCount, setSkuCount: this.setField("skuCount"),
-      skuCountBorder: s.errors.skuCount ? "var(--dg-orange)" : idle,
+      skuCountBorder: s.errors.skuCount ? "var(--alert)" : LINE,
       productDetails: s.productDetails, setProductDetails: this.setField("productDetails"),
-      productDetailsBorder: s.errors.productDetails ? "var(--dg-orange)" : idle,
+      productDetailsBorder: s.errors.productDetails ? "var(--alert)" : LINE,
       productDimensions: s.productDimensions, setProductDimensions: this.setField("productDimensions"),
       productDriveLink: s.productDriveLink, setProductDriveLink: this.setField("productDriveLink"),
       productFileExamples: DG_CONFIG.productFileExamples,
@@ -876,35 +896,30 @@ class Component extends DCLogic {
       personDriveLink: s.personDriveLink, setPersonDriveLink: this.setField("personDriveLink"),
       consistencyDetails: s.consistencyDetails, setConsistencyDetails: this.setField("consistencyDetails"),
       otherVision: s.otherVision, setOtherVision: this.setField("otherVision"),
-      otherVisionBorder: s.errors.otherVision ? "var(--dg-orange)" : idle,
+      otherVisionBorder: s.errors.otherVision ? "var(--alert)" : LINE,
       otherFiles: this.fileList("otherFiles"), hasOtherFiles: s.otherFiles.length > 0,
       addOtherFiles: this.addFiles("otherFiles"),
       otherDriveLink: s.otherDriveLink, setOtherDriveLink: this.setField("otherDriveLink"),
-      step1ContinueBg: step1Ready ? "var(--dg-ink)" : "var(--dg-ink-15)",
-      step1ContinueFg: step1Ready ? "var(--dg-paper)" : "var(--dg-ink-55)",
+      step1ContinueBorder: step1Ready ? FG : LINE,
+      step1ContinueFg: step1Ready ? FG : "var(--faint)",
 
-      // step 2
       goalOptions,
       goalOtherSelected: !!s.goals["Other"],
       goalOther: s.goalOther, setGoalOther: this.setField("goalOther"),
       campaignNotes: s.campaignNotes, setCampaignNotes: this.setField("campaignNotes"),
 
-      // step 3
       packageCards,
-      step3ContinueBg: s.pkg ? "var(--dg-ink)" : "var(--dg-ink-15)",
-      step3ContinueFg: s.pkg ? "var(--dg-paper)" : "var(--dg-ink-55)",
+      step3ContinueBorder: s.pkg ? FG : LINE,
+      step3ContinueFg: s.pkg ? FG : "var(--faint)",
 
-      // step 4
       vibeOptions,
       visualDirection: s.visualDirection, setVisualDirection: this.setField("visualDirection"),
 
-      // step 5
       moodboardLink: s.moodboardLink, setMoodboardLink: this.setField("moodboardLink"),
       inspoFiles: this.fileList("inspoFiles"), hasInspoFiles: s.inspoFiles.length > 0,
       addInspoFiles: this.addFiles("inspoFiles"),
       inspoRefs: s.inspoRefs, setInspoRefs: this.setField("inspoRefs"),
 
-      // step 6
       avoid: s.avoid, setAvoid: this.setField("avoid"),
       nonNegotiables: s.nonNegotiables, setNonNegotiables: this.setField("nonNegotiables"),
       additionalNotes: s.additionalNotes, setAdditionalNotes: this.setField("additionalNotes"),
@@ -912,23 +927,23 @@ class Component extends DCLogic {
         ? "For personal brand shoots this might include facial features, hair, tattoos, wardrobe, accessories, or body proportions."
         : "For product shoots this might include packaging, labels, ingredients, proportions, or colors.",
 
-      // step 7
       contactName: s.contactName, setContactName: this.setField("contactName"),
       company: s.company, setCompany: this.setField("company"),
       contactEmail: s.contactEmail, setContactEmail: this.setField("contactEmail"),
       socialLink: s.socialLink, setSocialLink: this.setField("socialLink"),
-      contactNameBorder: s.errors.contactName ? "var(--dg-orange)" : idle,
-      companyBorder: s.errors.company ? "var(--dg-orange)" : idle,
-      contactEmailBorder: s.errors.contactEmail ? "var(--dg-orange)" : idle,
+      contactNameBorder: s.errors.contactName ? "var(--alert)" : LINE,
+      companyBorder: s.errors.company ? "var(--alert)" : LINE,
+      contactEmailBorder: s.errors.contactEmail ? "var(--alert)" : LINE,
       confirmed: s.confirmed, toggleConfirmed: this.toggleConfirmed,
       confirmGlyph: s.confirmed ? "\u2713" : "",
-      confirmBg: s.confirmed ? "var(--dg-ink)" : "var(--dg-paper)",
-      confirmBorder: s.errors.confirmed ? "var(--dg-orange)" : "var(--dg-ink)",
+      confirmBg: s.confirmed ? "var(--fg)" : "transparent",
+      confirmFg: s.confirmed ? "var(--bg)" : "transparent",
+      confirmBorder: s.errors.confirmed ? "var(--alert)" : FG,
       summaryRows,
       submitPlan: this.submitPlan,
       isSubmitting: s.submitStatus === "loading",
       submitError: s.submitStatus === "error",
-      submitBg: s.submitStatus === "loading" ? "var(--dg-ink-35)" : "var(--dg-ink)",
+      submitFg: s.submitStatus === "loading" ? "var(--faint)" : FG,
       submitLabel: s.submitStatus === "loading" ? "Submitting\u2026" : (s.submitStatus === "error" ? "Try Again" : "Submit Photoshoot Request")
     };
   }
